@@ -31,7 +31,17 @@ int main(){
 	}
 	n = s.size();
 	//Building a prefix expression
-	
+	s.push_back('(');
+	stack<char> A;
+	vector<char> prefix;
+	A.push(')');
+	for(int i=0;i<=n;i++){
+		ch=s[i];
+		if(ch=='a'||ch=='b'){
+			prefix.push_back(ch);
+		else if(ch!='
+			A.push(ch);
+	}
 	//Contructing the tree using shunting yard algorithm
 	
 	return 0;
