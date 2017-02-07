@@ -12,10 +12,7 @@ struct state{
 };
 
 int main(){
-	cout<<"Enter number of elements in alphabet"<<endl;
-	int n;
-	cin>>n;
-	cout<<"Enter the regular expression ending with '#'"<<endl;
+	cout<<"Enter the regular expression ending with '#' with aplhabet size 2 (a,b)"<<endl;
 	vector<char> s;
 	char ch,last='.';
 	while(1){
@@ -26,7 +23,7 @@ int main(){
 			break;
 		s.push_back(ch);
 		if(ch=='*')
-			s.push_back('@');
+			s.push_back('@');//dummy variable for star
 		last=ch;
 	}
 	n = s.size();
@@ -37,13 +34,16 @@ int main(){
 	A.push(')');
 	for(int i=0;i<=n;i++){
 		ch=s[i];
-		if(ch=='a'||ch=='b'){
+		if(ch=='a'||ch=='b')
 			prefix.push_back(ch);
-		else if(ch!='
+		else if(ch!='#')
 			A.push(ch);
 	}
+	for(int i=0;i<prefix.size();i++)
+		cout<<prefix[i];
+	cout<<endl;
 	//Contructing the tree using shunting yard algorithm
-	
+	                                         
 	return 0;
 }
 	
