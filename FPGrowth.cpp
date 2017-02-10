@@ -1,10 +1,21 @@
+//-1 is null;
 #include<iostream>
 #include<bits/stdc++.h>
+
 using namespace std;
 
 vector<pair<int,int> > m;
+map<int,int> Flist;
 int total = 0;
-int support;
+int support,number = 1;
+char *name;
+
+struct node{
+	int name;
+	int count;
+}arr[100];
+
+bool matrix[100][100];
 
 set<int> processLine(string s){
 	set <int> mySet;
@@ -28,6 +39,7 @@ map<int,int> reverse(map<int,int> first){
 	while(i!=first.end()){
 		if(i->second >= support){
 			second[i->second] = i->first;
+			number++;
 		}
 		i++;
 	}
@@ -38,8 +50,11 @@ void allot(map<int,int> x){
 	map<int,int>::iterator i;
 	i = x.end();
 	i--;
+	int k = number;
 	while(true){
-		m.push_back(make_pair(i->second,i->first));	
+		m.push_back(make_pair(i->second,i->first));
+		Flist[i->second] = k;
+		k--;
 		if(i==x.begin()){		
 			break;
 		}
@@ -47,10 +62,34 @@ void allot(map<int,int> x){
 	}
 }
 
+void create_nodes(){
+	string line;
+	ifstream File(name);
+	if (File.is_open()){
+  	while(getline (File,line)){
+   		total++;
+     	set<int> s = processLine(line);
+			set<int> elements;
+			int count = 0;
+			vector<int> set;
+			while(!s.empty()){
+     		int x=*s.begin();
+     		s.erase(s.begin());
+				if(Flist[x]>0)
+					elements.insert(x);
+				count++;
+			}
+			//sorting
+   	}
+   	File.close();
+ 	}
+	else
+		cout<<"Unable to open file"<<endl;
+}
+
 int main(){
 	int supval = 30;
 	string line;
-	char *name;
 	map<int,int> init,rev;
 	name = (char *)malloc(20*sizeof(char));
 	cout<<"Enter the name of the file"<<endl;
@@ -73,14 +112,6 @@ int main(){
 	support = total*supval;
 	support = support/100;
 	cout<<"Total number of transactions = "<<total<<" support = "<<support<<" (30% of total)"<<endl;
-	map<int,int>::iterator i;
-	i = init.begin();
-	while(i!=init.end()){
-		if(i->second >= support){
-			int x = 0;//dummy operation
-		}
-		i++;
-	}
 	rev = reverse(init);
 	allot(rev);
 	cout<<"Frequency table:"<<endl;
@@ -90,5 +121,6 @@ int main(){
 		cout<<j->first<<"-"<<j->second<<endl;
 		j++;
 	}
+	create_nodes();
 	return 0;
 }
